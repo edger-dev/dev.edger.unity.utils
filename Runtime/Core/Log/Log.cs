@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-namespace Edger.Unity.Utils {
+namespace Edger.Unity {
     public static class Log {
         private static LogProvider _Provider;
         public static LogProvider Provider {

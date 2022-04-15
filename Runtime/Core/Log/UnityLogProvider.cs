@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 using UnityEngine;
 
-namespace Edger.Unity.Utils {
+namespace Edger.Unity {
     public class UnityLogProvider : LogProvider {
         public static string GetLogDir() {
             if (Application.platform == RuntimePlatform.IPhonePlayer ||

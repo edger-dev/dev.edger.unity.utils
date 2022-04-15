@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Edger.Unity.Utils {
+namespace Edger.Unity {
     public static class ObjectExtension {
         public static T TryAs<T>(this object obj) {
             if (obj == null) return default(T);

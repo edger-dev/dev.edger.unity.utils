@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Edger.Unity.Utils {
+namespace Edger.Unity {
     public static class ToolGuiHelper {
         public const int MinScreenWidth = 480;
         public const int DefaultScreenWidth = 800;

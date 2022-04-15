@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Edger.Unity.Utils {
+namespace Edger.Unity {
     public static class StringHelper {
         public static void Split(string val, char separator, out string left, out string right) {
             if (!string.IsNullOrEmpty(val)) {

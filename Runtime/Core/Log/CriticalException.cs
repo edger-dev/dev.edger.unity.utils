@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 
-namespace Edger.Unity.Utils {
+namespace Edger.Unity {
     public class CriticalException : Exception {
         public CriticalException(string msg)
                     : base(msg) {

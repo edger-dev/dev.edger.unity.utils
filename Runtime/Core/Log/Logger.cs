@@ -1,6 +1,6 @@
 using System;
 
-namespace Edger.Unity.Utils {
+namespace Edger.Unity {
     public interface ILogger {
         bool LogDebug { get; }
 

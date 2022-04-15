@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Edger.Unity.Utils {
+namespace Edger.Unity {
     public partial class GameObjectUtil: MonoBehaviour {
         private static GameObjectUtil _Instance;
         public static GameObjectUtil Instance {
@@ -12,7 +12,7 @@ namespace Edger.Unity.Utils {
                     GameObject go = GameObjectUtil.GetOrSpawnRoot("_EdgerUtils_");
                     UnityEngine.Object.DontDestroyOnLoad(go);
 
-                    _Instance = go.AddComponent<GameObjectUtil>();
+                    _Instance = go.GetOrAddComponent<GameObjectUtil>();
                 }
                 return _Instance;
             }

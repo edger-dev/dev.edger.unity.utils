@@ -3,10 +3,17 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
-using Edger.Unity.Utils;
+using Edger.Unity;
 
-namespace Edger.Unity.Utils.Udp {
+namespace Edger.Unity.Udp {
     public class UdpClient {
+        public static bool IsIPv4Multicast(string address) {
+            IPAddress ipAddress;
+            if (IPAddress.TryParse(address, out ipAddress)) {
+                return address.StartsWith("224.0.0.");
+            }
+            return false;
+        }
         private IPEndPoint _ClientEndPoint = null;
 
         private System.Net.Sockets.UdpClient _Client = null;
@@ -18,23 +25,18 @@ namespace Edger.Unity.Utils.Udp {
             get { return _Client != null; }
         }
 
-        public UdpClient(string address, int port, string group = null) {
+        public UdpClient(string address, int port) {
             try {
-                _ClientEndPoint = new IPEndPoint(IPAddress.Parse(address), port);
+                var ip = IPAddress.Parse(address);
+                _ClientEndPoint = new IPEndPoint(ip, port);
                 _Client = new System.Net.Sockets.UdpClient();
-                if (group != null) {
-                    _Client.JoinMulticastGroup(IPAddress.Parse(group));
+                if (IsIPv4Multicast(address)) {
+                    _Client.JoinMulticastGroup(ip);
                 }
             } catch (Exception err) {
                 Log.Error("Failed to create client: {0}:{1} -> {2}", address, port, err);
             }
         }
-
-        /*
-        ~UdpClient() {
-            Close();
-        }
-        */
 
         public void Close() {
             if (_Client != null) {

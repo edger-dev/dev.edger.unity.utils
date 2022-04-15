@@ -2,32 +2,31 @@ using System;
 using System.Text;
 using System.Collections;
 using System.Collections.Generic;
+
+using UnityEngine;
 using UnityEngine.Profiling;
 using Unity.Profiling;
 
-namespace Edger.Unity.Utils.Profiling {
+namespace Edger.Unity.Profiling {
     public enum ProfilerItemFormat {
+        Counter,
         MegaBytes,
+        Seconds,
         MilliSeconds,
     }
 
     public class ProfilerItem {
         public readonly ProfilerRecorder Recorder;
         public readonly string Prefix;
-        public readonly bool UseAvarage;
         public readonly ProfilerItemFormat Format;
 
         private List<ProfilerRecorderSample> _Samples = null;
 
-        public ProfilerItem(ProfilerRecorder recorder, string prefix, bool useAvarage, ProfilerItemFormat format) {
+        public ProfilerItem(ProfilerRecorder recorder, string prefix, ProfilerItemFormat format) {
             Recorder = recorder;
             Prefix = prefix;
-            UseAvarage = useAvarage;
             Format = format;
-
-            if (useAvarage) {
-                _Samples = new List<ProfilerRecorderSample>(recorder.Capacity);
-            }
+            _Samples = new List<ProfilerRecorderSample>(recorder.Capacity);
         }
 
         private double CalcAverageValue() {
@@ -42,22 +41,30 @@ namespace Edger.Unity.Utils.Profiling {
             return r / count;
         }
 
-        public void AppendValue(StringBuilder builder, double value) {
-            switch (Format) {
+        public static void AppendLine(StringBuilder builder, string prefix, ProfilerItemFormat format, double value) {
+            builder.Append(prefix);
+            builder.Append(": ");
+            switch (format) {
+                case ProfilerItemFormat.Counter:
+                    builder.Append($"{value:F2}");
+                    break;
                 case ProfilerItemFormat.MegaBytes:
                     builder.Append($"{value / 1024 / 1024:F2} MB");
+                    break;
+                case ProfilerItemFormat.Seconds:
+                    builder.Append($"{value:F2} s");
                     break;
                 case ProfilerItemFormat.MilliSeconds:
                     builder.Append($"{value * (1e-6f):F2} ms");
                     break;
             }
+            builder.AppendLine();
         }
-        public void Append(StringBuilder builder) {
-            builder.Append(Prefix);
-            if (UseAvarage) {
-                AppendValue(builder, CalcAverageValue());
+        public void AppendLine(StringBuilder builder, bool calcAverage) {
+            if (calcAverage) {
+                AppendLine(builder, Prefix, Format, CalcAverageValue());
             } else {
-                AppendValue(builder, Recorder.LastValueAsDouble);
+                AppendLine(builder, Prefix, Format, Recorder.LastValueAsDouble);
             }
         }
     }
@@ -78,45 +85,52 @@ namespace Edger.Unity.Utils.Profiling {
             return recorder;
         }
 
-        private static ProfilerRecorder GetRecorder(string name, ProfilerMarker marker) {
+        private static ProfilerRecorder GetRecorder(string name, ProfilerMarker marker, int capacity) {
             ProfilerRecorder recorder;
             if (!_Recorders.TryGetValue(name, out recorder)) {
-                recorder = ProfilerRecorder.StartNew(marker);
+                recorder = ProfilerRecorder.StartNew(marker, capacity);
                 _Recorders[name] = recorder;
             }
             return recorder;
         }
 
-        private static void AddProfilerItem(ProfilerRecorder recorder, string prefix, bool useAvarage, ProfilerItemFormat format) {
-            _Items.Add(new ProfilerItem(recorder, prefix, useAvarage, format));
+        private static void AddProfilerItem(ProfilerRecorder recorder, string prefix, ProfilerItemFormat format) {
+            _Items.Add(new ProfilerItem(recorder, prefix, format));
         }
 
-        public static void AddProfilerItem(ProfilerCategory category, string name, int capacity, bool useAvarage, ProfilerItemFormat format) {
+        public static void AddProfilerItem(ProfilerCategory category, string name, ProfilerItemFormat format, int capacity = DEFAULT_CAPACITY) {
             if (_Recorders.ContainsKey(name)) { return; }
             var recorder = GetRecorder(category, name, capacity);
-            AddProfilerItem(recorder, $"{name}: ", useAvarage, format);
+            AddProfilerItem(recorder, name, format);
         }
 
-        public static void AddProfilerItem(string name, ProfilerMarker marker, bool useAvarage, ProfilerItemFormat format) {
+        public static void AddProfilerItem(string name, ProfilerMarker marker, ProfilerItemFormat format, ProfilerCategory category, int capacity = DEFAULT_CAPACITY) {
             if (_Recorders.ContainsKey(name)) { return; }
-            var recorder = GetRecorder(name, marker);
-            AddProfilerItem(recorder, $"{name}: ", useAvarage, format);
+            var recorder = GetRecorder(name, marker, capacity);
+            AddProfilerItem(recorder, name, format);
         }
 
-        public static void AddCommonItems() {
-            AddProfilerItem(ProfilerCategory.Internal, "Main Thread", DEFAULT_CAPACITY, true, ProfilerItemFormat.MilliSeconds);
-            AddProfilerItem(ProfilerCategory.Memory, "System Used Memory", 1, false, ProfilerItemFormat.MegaBytes);
-            AddProfilerItem(ProfilerCategory.Memory, "GC Reserved Memory", 1, false, ProfilerItemFormat.MegaBytes);
+        public static void AddProfilerItem(string name, ProfilerMarker marker, ProfilerItemFormat format, int capacity = DEFAULT_CAPACITY) {
+            AddProfilerItem(name, marker, format, ProfilerCategory.Scripts, capacity);
         }
 
-        public static string CalcStats() {
-            var sb = _StringBuilder;
-            sb.Clear();
+        public static void AddCommonItems(int capacity = DEFAULT_CAPACITY) {
+            AddProfilerItem(ProfilerCategory.Internal, "Main Thread", ProfilerItemFormat.MilliSeconds, capacity);
+            AddProfilerItem(ProfilerCategory.Memory, "System Used Memory", ProfilerItemFormat.MegaBytes, capacity);
+            AddProfilerItem(ProfilerCategory.Memory, "GC Reserved Memory", ProfilerItemFormat.MegaBytes, capacity);
+            AddProfilerItem(ProfilerCategory.Render, "SetPass Calls Count", ProfilerItemFormat.Counter, capacity);
+            AddProfilerItem(ProfilerCategory.Render, "Draw Calls Count", ProfilerItemFormat.Counter, capacity);
+            AddProfilerItem(ProfilerCategory.Render, "Vertices Count", ProfilerItemFormat.Counter, capacity);
+        }
+
+        public static string CalcStats(bool calcAvarage) {
+            var builder = _StringBuilder;
+            builder.Clear();
             foreach (var item in _Items) {
-                item.Append(sb);
-                sb.AppendLine();
+                item.AppendLine(builder, calcAvarage);
             }
-            return sb.ToString();
+            ProfilerItem.AppendLine(builder, "Time", ProfilerItemFormat.Seconds, Time.realtimeSinceStartupAsDouble);
+            return builder.ToString();
         }
     }
 }

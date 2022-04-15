@@ -4,9 +4,9 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
-using Edger.Unity.Utils;
+using Edger.Unity;
 
-namespace Edger.Unity.Utils.Udp {
+namespace Edger.Unity.Udp {
     public class UdpPacket {
         public static UdpPacket ReadPacket(string fromAddress, byte[] buffer) {
             UdpPacket pkt = null;

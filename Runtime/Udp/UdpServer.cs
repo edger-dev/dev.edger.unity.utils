@@ -4,9 +4,9 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
-using Edger.Unity.Utils;
+using Edger.Unity;
 
-namespace Edger.Unity.Utils.Udp {
+namespace Edger.Unity.Udp {
     public class UdpServer {
         private object _ReceivedPacketsLock = new object();
         private Queue<UdpPacket> _ReceivedPackets = new Queue<UdpPacket>();
@@ -26,8 +26,10 @@ namespace Edger.Unity.Utils.Udp {
             get { return _Server; }
         }
 
+        /*
         public delegate void OnData(string clientIP, byte[] msg);
         public event OnData DataListeners = delegate { };
+         */
 
         public UdpServer(int port, string group = null, bool isDebug = false) {
             _Port = port;

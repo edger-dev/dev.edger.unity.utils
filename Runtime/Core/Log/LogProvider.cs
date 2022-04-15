@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 
-namespace Edger.Unity.Utils {
+namespace Edger.Unity {
     public abstract class LogProvider : ILogger {
         public static int MAX_STACK_TRACK_NUM = 32;
         public static int DEBUG_MAX_STACK_TRACK_NUM = 128;

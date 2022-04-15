@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Edger.Unity.Utils.Profiling {
-    public partial class ProfilerUtil : MonoBehaviour {
+namespace Edger.Unity.Profiling {
+    public partial class ProfilerUtil : BaseMono {
         private static ProfilerUtil _Instance;
         public static ProfilerUtil Instance {
             get {
                 if (_Instance == null) {
-                    _Instance = GameObjectUtil.Instance.gameObject.AddComponent<ProfilerUtil>();
+                    _Instance = GameObjectUtil.Instance.gameObject.GetOrAddComponent<ProfilerUtil>();
                 }
                 return _Instance;
             }
@@ -23,7 +23,12 @@ namespace Edger.Unity.Utils.Profiling {
         public Color Color = Color.yellow;
 
         public void Update() {
-            Stats = CalcStats();
+            if (ShowGUI) {
+                Stats = CalcStats(true);
+            }
+            if (_UdpClient != null) {
+                _UdpClient.SendData(CalcStats(false));
+            }
         }
 
         public void OnGUI() {

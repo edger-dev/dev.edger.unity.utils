@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Diagnostics;
 
-namespace Edger.Unity.Utils {
+namespace Edger.Unity {
     public class LogFileWriter {
         public static long FLUSH_DURATION = 5 * 60 * 1000; // flush every 5 minute
 
