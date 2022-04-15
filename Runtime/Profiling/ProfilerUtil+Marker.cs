@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.Profiling;
 using Unity.Profiling;
 
-namespace Edger.Utils.Profiling {
+namespace Edger.Unity.Utils.Profiling {
     public partial class ProfilerUtil {
         private static readonly Dictionary<string, ProfilerMarker> _Markers = new Dictionary<string, ProfilerMarker>();
 
@@ -19,6 +19,15 @@ namespace Edger.Utils.Profiling {
 
         public static ProfilerMarker GetMarker(Type type) {
             return GetMarker(type.Name);
+        }
+
+        public static ProfilerMarker GetMarker(string name, bool useAvarage, ProfilerItemFormat format) {
+            bool isNew = !_Markers.ContainsKey(name);
+            var marker = GetMarker(name);
+            if (isNew) {
+                AddProfilerItem(name, marker, useAvarage, format);
+            }
+            return marker;
         }
     }
 }

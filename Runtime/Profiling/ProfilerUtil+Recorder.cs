@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine.Profiling;
 using Unity.Profiling;
 
-namespace Edger.Utils.Profiling {
+namespace Edger.Unity.Utils.Profiling {
     public enum ProfilerItemFormat {
         MegaBytes,
         MilliSeconds,
@@ -87,20 +87,20 @@ namespace Edger.Utils.Profiling {
             return recorder;
         }
 
-        private static void AddProfilerItem(ProfilerRecorder recorder, string prefix, bool useAvarage, ProfilerItemFormat Format) {
-            _Items.Add(new ProfilerItem(recorder, prefix, useAvarage, Format));
+        private static void AddProfilerItem(ProfilerRecorder recorder, string prefix, bool useAvarage, ProfilerItemFormat format) {
+            _Items.Add(new ProfilerItem(recorder, prefix, useAvarage, format));
         }
 
-        public static void AddProfilerItem(ProfilerCategory category, string name, int capacity, bool useAvarage, ProfilerItemFormat Format) {
+        public static void AddProfilerItem(ProfilerCategory category, string name, int capacity, bool useAvarage, ProfilerItemFormat format) {
             if (_Recorders.ContainsKey(name)) { return; }
             var recorder = GetRecorder(category, name, capacity);
-            AddProfilerItem(recorder, $"{name}: ", useAvarage, Format);
+            AddProfilerItem(recorder, $"{name}: ", useAvarage, format);
         }
 
-        public static void AddProfilerItem(string name, ProfilerMarker marker, bool useAvarage, ProfilerItemFormat Format) {
+        public static void AddProfilerItem(string name, ProfilerMarker marker, bool useAvarage, ProfilerItemFormat format) {
             if (_Recorders.ContainsKey(name)) { return; }
             var recorder = GetRecorder(name, marker);
-            AddProfilerItem(recorder, $"{name}: ", useAvarage, Format);
+            AddProfilerItem(recorder, $"{name}: ", useAvarage, format);
         }
 
         public static void AddCommonItems() {
