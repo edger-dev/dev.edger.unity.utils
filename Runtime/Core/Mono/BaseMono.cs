@@ -48,7 +48,7 @@ namespace Edger.Unity {
         protected virtual void OnAwake() {}
 
         public virtual bool LogDebug { get { return false; } }
-        public virtual string LogPrefix { get { return string.Format("<{0}>[{1}]", GetType().Name, gameObject.name); } }
+        public virtual string LogPrefix { get { return string.Format("<{0}>[{1}] ", GetType().Name, gameObject.name); } }
         public virtual bool DebugMode { get { return false; } }
 
         public bool _Debugging = false;

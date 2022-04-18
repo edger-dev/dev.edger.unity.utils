@@ -56,6 +56,7 @@ namespace Edger.Unity.Udp {
                     _Client.Send(bytes, bytes.Length, _ClientEndPoint);
                     return true;
                 } catch (Exception err) {
+                    Close();
                     Log.Error("SendBytes failed: {0} -> {1} -> {2}", _ClientEndPoint, data, err);
                 }
             } else {

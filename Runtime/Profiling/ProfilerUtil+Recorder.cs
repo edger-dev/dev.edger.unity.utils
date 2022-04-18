@@ -41,30 +41,51 @@ namespace Edger.Unity.Profiling {
             return r / count;
         }
 
-        public static void AppendLine(StringBuilder builder, string prefix, ProfilerItemFormat format, double value) {
+        public static void AppendLine(bool calcAverage, StringBuilder builder, string prefix, ProfilerItemFormat format, double value) {
             builder.Append(prefix);
             builder.Append(": ");
             switch (format) {
                 case ProfilerItemFormat.Counter:
-                    builder.Append($"{value:F2}");
+                    if (calcAverage) {
+                        builder.Append((int)value); 
+                    } else {
+                        builder.Append(value);
+                    }
                     break;
                 case ProfilerItemFormat.MegaBytes:
-                    builder.Append($"{value / 1024 / 1024:F2} MB");
+                    double mb = value / 1024 / 1024;
+                    if (calcAverage) {
+                        builder.Append((int) mb);
+                    } else {
+                        builder.Append(mb);
+                    }
+                    builder.Append(" MB");
                     break;
                 case ProfilerItemFormat.Seconds:
-                    builder.Append($"{value:F2} s");
+                    if (calcAverage) {
+                        builder.Append((int)value); 
+                    } else {
+                        builder.Append(value);
+                    }
+                    builder.Append(" s");
                     break;
                 case ProfilerItemFormat.MilliSeconds:
-                    builder.Append($"{value * (1e-6f):F2} ms");
+                    double ms = value * (1e-6f);
+                    if (calcAverage) {
+                        builder.AppendFormat("{0:F2}", ms);
+                    } else {
+                        builder.Append(ms);
+                    }
+                    builder.Append(" ms");
                     break;
             }
             builder.AppendLine();
         }
         public void AppendLine(StringBuilder builder, bool calcAverage) {
             if (calcAverage) {
-                AppendLine(builder, Prefix, Format, CalcAverageValue());
+                AppendLine(calcAverage, builder, Prefix, Format, CalcAverageValue());
             } else {
-                AppendLine(builder, Prefix, Format, Recorder.LastValueAsDouble);
+                AppendLine(calcAverage, builder, Prefix, Format, Recorder.LastValueAsDouble);
             }
         }
     }
@@ -129,7 +150,7 @@ namespace Edger.Unity.Profiling {
             foreach (var item in _Items) {
                 item.AppendLine(builder, calcAvarage);
             }
-            ProfilerItem.AppendLine(builder, "Time", ProfilerItemFormat.Seconds, Time.realtimeSinceStartupAsDouble);
+            ProfilerItem.AppendLine(calcAvarage, builder, "Time", ProfilerItemFormat.Seconds, Time.realtimeSinceStartupAsDouble);
             return builder.ToString();
         }
     }

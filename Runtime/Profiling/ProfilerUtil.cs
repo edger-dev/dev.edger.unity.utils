@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Edger.Unity.Remote;
+
 namespace Edger.Unity.Profiling {
     public partial class ProfilerUtil : BaseMono {
         private static ProfilerUtil _Instance;
@@ -26,7 +28,7 @@ namespace Edger.Unity.Profiling {
             if (ShowGUI) {
                 Stats = CalcStats(true);
             }
-            if (_UdpClient != null) {
+            if (_UdpClient != null && _UdpClient.Connected) {
                 _UdpClient.SendData(CalcStats(false));
             }
         }
@@ -38,6 +40,22 @@ namespace Edger.Unity.Profiling {
                 }
                 GUI.Label(ToolGuiHelper.ScreenRect, Stats, TextStyle);
             }
+        }
+
+        private IRemoteSetting _Visible;
+        private IRemoteSetting _ToUdp;
+
+        public void OnEnable() {
+            _Visible = RemoteUtil.Instance.Register("Profiler.Visible", () => {
+                return ShowGUI.ToRemote();
+            }, (value) => {
+                ShowGUI = value.RemoteToBool();
+            });
+            _ToUdp = RemoteUtil.Instance.Register("Profiler.ToUdp", GetToUdp, SetToUdp);
+        }
+        public void OnDisable() {
+            RemoteUtil.Instance.Unregister(ref _Visible);
+            RemoteUtil.Instance.Unregister(ref _ToUdp);
         }
     }
 }
