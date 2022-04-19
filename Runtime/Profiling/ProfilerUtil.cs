@@ -17,7 +17,7 @@ namespace Edger.Unity.Profiling {
             }
         }
 
-        private GUIStyle TextStyle;
+        private GUIStyle _TextStyle;
 
         public string Stats = "";
 
@@ -35,10 +35,10 @@ namespace Edger.Unity.Profiling {
 
         public void OnGUI() {
             if (ShowGUI) {
-                if (TextStyle == null) {
-                    TextStyle = ToolGuiHelper.NewTextStyle(Color);
+                if (_TextStyle == null) {
+                    _TextStyle = ToolGuiHelper.NewTextStyle(Color);
                 }
-                GUI.Label(ToolGuiHelper.ScreenRect, Stats, TextStyle);
+                GUI.Label(ToolGuiHelper.ScreenRect, Stats, _TextStyle);
             }
         }
 
