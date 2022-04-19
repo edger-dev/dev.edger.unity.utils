@@ -50,7 +50,7 @@ namespace Edger.Unity.Udp {
         }
 
         public bool SendData(string data) {
-            byte[] bytes = StringHelper.EncodeUtf8ToBytes(data);
+            byte[] bytes = StringUtil.EncodeUtf8ToBytes(data);
             if (_Client != null) {
                 try {
                     _Client.Send(bytes, bytes.Length, _ClientEndPoint);

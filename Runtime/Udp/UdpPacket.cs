@@ -10,7 +10,7 @@ namespace Edger.Unity.Udp {
     public class UdpPacket {
         public static UdpPacket ReadPacket(string fromAddress, byte[] buffer) {
             UdpPacket pkt = null;
-            string data = StringHelper.DecodeUtf8FromBytes(buffer);
+            string data = StringUtil.DecodeUtf8FromBytes(buffer);
             if (data != null) {
                 pkt = new UdpPacket(fromAddress, data);
             }

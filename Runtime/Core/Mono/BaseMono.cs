@@ -10,7 +10,7 @@ namespace Edger.Unity {
     public class MonoTypeAttribute : ReadOnlyFieldAttribute {
     }
 
-    public abstract class BaseMono : MonoBehaviour {
+    public abstract class BaseMono : MonoBehaviour, ILogger {
         [MonoTypeAttribute]
         [SerializeField]
         private string _MonoType = null;
@@ -101,6 +101,14 @@ namespace Edger.Unity {
                 StopCoroutine(coroutine);
                 coroutine = null;
             }
+        }
+
+        public void RunCoroutine(ref IEnumerator coroutine, Func<IEnumerator> doAsync) {
+            if (coroutine != null) {
+                Error("Coroutine Not Finished Yet: {0}", coroutine);
+            }
+            coroutine = doAsync();
+            StartCoroutine(coroutine);
         }
 
         public void RunCoroutine<T>(ref IEnumerator coroutine, Func<T, IEnumerator> doAsync, T param) {

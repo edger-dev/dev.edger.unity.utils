@@ -43,7 +43,7 @@ namespace Edger.Unity.Profiling {
 
         private void SetToUdp(string value) {
             string address, _port;
-            StringHelper.Split(value, ':', out address, out _port);
+            StringUtil.Split(value, ':', out address, out _port);
             if (string.IsNullOrEmpty(address)) {
                 ResetUdpClient();
             } else {
