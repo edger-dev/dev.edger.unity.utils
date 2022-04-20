@@ -17,6 +17,7 @@ namespace Edger.Unity {
             }
         }
 
+        public static bool TraceAsErrorInEditor = true;
         public static bool LogDebugInEditor = false;
 
         private static bool _GettingContext = false;
@@ -74,11 +75,13 @@ namespace Edger.Unity {
              * this logic here is to NOT trying to get context of those messages,
              * since they can trigger loops that leads to stack overflow.
              */
-            _GettingContext = true;
-            UnityEngine.Object context = GetContext(source);
-            _GettingContext = false;
-
-            if (stackTrace != null) {
+            UnityEngine.Object context = null;
+            if (source != null) {
+                _GettingContext = true;
+                context = GetContext(source);
+                _GettingContext = false;
+            }
+            if (stackTrace != null || (TraceAsErrorInEditor && kind == LoggerConsts.TRACE)) {
                 UnityEngine.Debug.LogError(log, context);
             } else if (LogDebugInEditor || kind != LoggerConsts.DEBUG) {
                 UnityEngine.Debug.Log(log, context);
