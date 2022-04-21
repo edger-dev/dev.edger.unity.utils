@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Edger.Unity {
     public static class ToolGuiHelper {
-        public const int MinScreenWidth = 480;
+        public const int MinScreenWidth = 800;
         public const int DefaultScreenWidth = 800;
         public const int DefaultFontSize = 16;
 
