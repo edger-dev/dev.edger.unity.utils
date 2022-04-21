@@ -50,6 +50,7 @@ namespace Edger.Unity.Profiling {
                 return ShowGUI.ToRemote();
             }, (value) => {
                 ShowGUI = value.RemoteToBool();
+                _TextStyle = null;
             });
             _ToUdp = RemoteUtil.Instance.Register("Profiler.ToUdp", GetToUdp, SetToUdp);
         }

@@ -14,7 +14,8 @@ namespace Edger.Unity {
         private static int _ScreenWidth = MinScreenWidth;
         public static int ScreenWidth {
             get {
-                if (_ScreenWidth <= 0) {
+                if (Screen.width != _LastScreenWidth
+                        || Screen.height != _LastScreenHeight) {
                     CheckScale();
                 }
                 return _ScreenWidth;
@@ -45,7 +46,8 @@ namespace Edger.Unity {
         private static float _Scale;
         public static float Scale {
             get {
-                if (_Scale <= 0) {
+                if (Screen.width != _LastScreenWidth
+                        || Screen.height != _LastScreenHeight) {
                     CheckScale();
                 }
                 return _Scale;
