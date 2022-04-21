@@ -27,6 +27,8 @@ namespace Edger.Unity.Profiling {
         public void Update() {
             if (ShowGUI) {
                 Stats = CalcStats(true);
+            } else {
+                _TextStyle = null;
             }
             if (_UdpClient != null && _UdpClient.Connected) {
                 _UdpClient.SendData(CalcStats(false));
