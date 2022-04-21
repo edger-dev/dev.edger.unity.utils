@@ -30,7 +30,7 @@ namespace Edger.Unity {
                 if (targetType == null) continue;
                 var targets = go.GetComponentsInChildren(targetType);
                 if (targets.Length > 0) {
-                    Log.ErrorFrom(go, "FixGameObject() {0} {1} <{2}> - [{3}]", go.name, fixer.GetType().Name,targetType.Name, targets.Length);
+                    Log.InfoFrom(go, "FixGameObject() {0} {1} <{2}> - [{3}]", go.name, fixer.GetType().Name,targetType.Name, targets.Length);
                 }
                 foreach (var target in targets) {
                     count += fixer.FixShaders(target);
@@ -126,18 +126,4 @@ namespace Edger.Unity {
             return result.ToArray();
         }
     }
-
-    /*
-    public class SpriteShaderFixer : ShaderFixer<SpriteRenderer> {
-        protected override Material[] GetMaterials(SpriteRenderer target) {
-            return target.sharedMaterials;
-        }
-    }
-
-    public class ParticleSystemRendererShaderFixer : ShaderFixer<ParticleSystemRenderer> {
-        protected override Material[] GetMaterials(ParticleSystemRenderer target) {
-            return target.sharedMaterials;
-        }
-    }
-     */
 }
