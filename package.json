@@ -4,5 +4,8 @@
     "version": "0.1.0",
     "unity": "2020.3",
     "description": "TODO",
-    "category": "Tools"
+    "category": "Tools",
+    "dependencies": {
+        "com.unity.textmeshpro": "3.0.6"
+    }
 }
