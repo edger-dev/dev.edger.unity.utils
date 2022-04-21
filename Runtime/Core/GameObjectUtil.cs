@@ -24,5 +24,20 @@ namespace Edger.Unity {
             }
             return result;
         }
-    }
+        public static void Destroy(GameObject go) {
+            if (go == null) return;
+            go.transform.SetParent(null, false);
+            if (Application.isPlaying) {
+                GameObject.Destroy(go);
+            } else {
+                GameObject.DestroyImmediate(go);
+            }
+        }
+
+        public static bool IsEmpty(GameObject go) {
+            if (go == null) return false;
+            if (go.transform.childCount > 0) return false;
+            Component[] allComponents = go.GetComponents<Component>();
+            return allComponents.Length <= 1;
+        }}
 }
