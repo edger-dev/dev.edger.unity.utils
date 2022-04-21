@@ -23,7 +23,11 @@ namespace Edger.Unity.Editor {
             Log.Error("EdgerMenu: {0}", menu.menuItem);
         }
 
+    #if UNITY_EDITOR_OSX
+        [MenuItem("Edger/Fix Shaders in Scene %e")] // CMD + E
+    #else
         [MenuItem("Edger/Fix Shaders in Scene &e")] // ALT + E
+    #endif
         public static void FixShadersInScene() {
             LogMenuItem((MenuItem)MethodBase.GetCurrentMethod().GetCustomAttributes(typeof(MenuItem), true)[0]);
             _FixShadersInScene(false);
