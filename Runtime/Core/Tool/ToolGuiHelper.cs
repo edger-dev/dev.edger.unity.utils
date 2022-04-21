@@ -6,10 +6,12 @@ using UnityEngine;
 namespace Edger.Unity {
     public static class ToolGuiHelper {
         public const int MinScreenWidth = 800;
-        public const int DefaultScreenWidth = 800;
         public const int DefaultFontSize = 16;
 
-        private static int _ScreenWidth = DefaultScreenWidth;
+        private static int _LastScreenWidth;
+        private static int _LastScreenHeight;
+
+        private static int _ScreenWidth = MinScreenWidth;
         public static int ScreenWidth {
             get {
                 if (_ScreenWidth <= 0) {
@@ -21,7 +23,8 @@ namespace Edger.Unity {
         private static int _ScreenHeight;
         public static int ScreenHeight {
             get {
-                if (_ScreenHeight <= 0) {
+                if (Screen.width != _LastScreenWidth
+                        || Screen.height != _LastScreenHeight) {
                     CheckScale();
                 }
                 return _ScreenHeight;
@@ -31,7 +34,8 @@ namespace Edger.Unity {
         public static Rect _ScreenRect = Rect.zero;
         public static Rect ScreenRect {
             get {
-                if (_ScreenRect.width <= 0 || _ScreenRect.height <= 0) {
+                if (Screen.width != _LastScreenWidth
+                        || Screen.height != _LastScreenHeight) {
                     CheckScale();
                 }
                 return _ScreenRect;
@@ -48,19 +52,16 @@ namespace Edger.Unity {
             }
         }
 
-        private static int _LastScreenWidth;
-        private static int _LastScreenHeight;
-
         public static bool CheckScale() {
             if (Screen.width != _LastScreenWidth
                     || Screen.height != _LastScreenHeight) {
-                ResetScale(_ScreenWidth);
+                SetScreenWidth(_ScreenWidth);
                 return true;
             }
             return false;
         }
 
-        public static void ResetScale(int screenWidth) {
+        public static void SetScreenWidth(int screenWidth) {
             screenWidth = Math.Max(screenWidth, MinScreenWidth);
             _ScreenWidth = screenWidth;
 
@@ -75,10 +76,8 @@ namespace Edger.Unity {
             }
             _ScreenRect = NewRect(0, 0, _ScreenWidth, _ScreenHeight);
 
-            /*
-            Log.Debug("ToolGuiHelper.CalcScale: {0}, {1} -> {2}, {3} -> {4}",
+            Log.Info("ToolGuiHelper.SetScreenWidth: {0}, {1} -> {2}, {3} -> {4}",
                     Screen.width, Screen.height, ScreenWidth, ScreenHeight, Scale);
-             */
         }
 
         public static Rect NewRect(int x, int y, int width, int height) {
