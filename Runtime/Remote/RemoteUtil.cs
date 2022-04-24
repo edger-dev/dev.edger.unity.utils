@@ -27,7 +27,9 @@ namespace Edger.Unity.Remote {
         private UdpServer _Server;
 
         public void Start() {
+    #if !UNITY_EDITOR
             _Server = UdpServer.FactoryWithFreePort(Port);
+    #endif
             if (_Server != null) {
                 Port = _Server.Port;
                 Error("Started UDP server on port: {0}", Port);
