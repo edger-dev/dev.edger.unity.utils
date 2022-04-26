@@ -26,12 +26,12 @@ namespace Edger.Unity.Profiling {
 
         public static bool CalcFixedUpdateSeconds(double threshold) {
             FixedUpdateSeconds = FixedUpdateStartTime.GetPassedSeconds();
-            return UpdateSeconds >= threshold;
+            return FixedUpdateSeconds >= threshold;
         }
 
         public static bool CalcLateUpdateSeconds(double threshold) {
             LateUpdateSeconds = LateUpdateStartTime.GetPassedSeconds();
-            return UpdateSeconds >= threshold;
+            return LateUpdateSeconds >= threshold;
         }
 
         public void Update() {

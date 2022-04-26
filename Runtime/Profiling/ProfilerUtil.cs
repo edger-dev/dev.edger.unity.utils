@@ -15,6 +15,7 @@ namespace Edger.Unity.Profiling {
         public static ProfilerUtil Instance {
             get {
                 if (_Instance == null) {
+                    GameObjectUtil.Instance.gameObject.GetOrAddComponent<ProfilerTimer>();
                     _Instance = GameObjectUtil.Instance.gameObject.GetOrAddComponent<ProfilerUtil>();
                 }
                 return _Instance;
@@ -28,9 +29,9 @@ namespace Edger.Unity.Profiling {
         public bool ShowGUI = false;
         public Color Color = Color.yellow;
 
-        public double SlowUpdateSeconds = 0.005;
-        public double SlowFixedUpdateSeconds = 0.002;
-        public double SlowLateUpdateSeconds = 0.002;
+        public double SlowUpdateSeconds = 0.009;
+        public double SlowFixedUpdateSeconds = 0.004;
+        public double SlowLateUpdateSeconds = 0.004;
 
         public void Update() {
             if (ProfilerTimer.CalcUpdateSeconds(SlowUpdateSeconds)) {
