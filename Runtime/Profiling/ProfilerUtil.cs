@@ -3,9 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Edger.Unity;
 using Edger.Unity.Remote;
 
 namespace Edger.Unity.Profiling {
+    // Note: to keep this called after all other scripts, need to put ProfilerUtil
+    // as the last one in "Project Settings -> Script Execution Order"
+    // http://docs.unity3d.com/Documentation/Components/class-ScriptExecution.html
     public partial class ProfilerUtil : BaseMono {
         private static ProfilerUtil _Instance;
         public static ProfilerUtil Instance {
@@ -24,7 +28,27 @@ namespace Edger.Unity.Profiling {
         public bool ShowGUI = false;
         public Color Color = Color.yellow;
 
+        public double SlowUpdateSeconds = 0.005;
+        public double SlowFixedUpdateSeconds = 0.002;
+        public double SlowLateUpdateSeconds = 0.002;
+
         public void Update() {
+            if (ProfilerTimer.CalcUpdate(SlowUpdateSeconds)) {
+                Log.Custom(LoggerConst.TRACE, "Slow Update: {0:F2} ms", ProfilerTimer.UpdateSeconds * 1000.0);
+            }
+        }
+
+        public void FixedUpdate() {
+            if (ProfilerTimer.CalcFixedUpdate(SlowFixedUpdateSeconds)) {
+                Log.Custom(LoggerConst.TRACE, "Slow FixedUpdate: {0:F2} ms", ProfilerTimer.FixedUpdateSeconds * 1000.0);
+            }
+        }
+
+        public void LateUpdate() {
+            if (ProfilerTimer.CalcLateUpdate(SlowLateUpdateSeconds)) {
+                Log.Custom(LoggerConst.TRACE, "Slow LateUpdate: {0:F2} ms", ProfilerTimer.LateUpdateSeconds * 1000.0);
+            }
+            ProfilerTimer.CalcLateUpdate();
             if (ShowGUI) {
                 Stats = CalcStats(true);
             } else {
