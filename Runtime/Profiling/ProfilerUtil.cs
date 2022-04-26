@@ -33,22 +33,21 @@ namespace Edger.Unity.Profiling {
         public double SlowLateUpdateSeconds = 0.002;
 
         public void Update() {
-            if (ProfilerTimer.CalcUpdate(SlowUpdateSeconds)) {
-                Log.Custom(LoggerConst.TRACE, "Slow Update: {0:F2} ms", ProfilerTimer.UpdateSeconds * 1000.0);
+            if (ProfilerTimer.CalcUpdateSeconds(SlowUpdateSeconds)) {
+                Log.Custom(LoggerConsts.TRACE, "slow_Update: {0:F2} ms", ProfilerTimer.UpdateSeconds * 1000.0);
             }
         }
 
         public void FixedUpdate() {
-            if (ProfilerTimer.CalcFixedUpdate(SlowFixedUpdateSeconds)) {
-                Log.Custom(LoggerConst.TRACE, "Slow FixedUpdate: {0:F2} ms", ProfilerTimer.FixedUpdateSeconds * 1000.0);
+            if (ProfilerTimer.CalcFixedUpdateSeconds(SlowFixedUpdateSeconds)) {
+                Log.Custom(LoggerConsts.TRACE, "slow_FixedUpdate: {0:F2} ms", ProfilerTimer.FixedUpdateSeconds * 1000.0);
             }
         }
 
         public void LateUpdate() {
-            if (ProfilerTimer.CalcLateUpdate(SlowLateUpdateSeconds)) {
-                Log.Custom(LoggerConst.TRACE, "Slow LateUpdate: {0:F2} ms", ProfilerTimer.LateUpdateSeconds * 1000.0);
+            if (ProfilerTimer.CalcLateUpdateSeconds(SlowLateUpdateSeconds)) {
+                Log.Custom(LoggerConsts.TRACE, "slow_LateUpdate: {0:F2} ms", ProfilerTimer.LateUpdateSeconds * 1000.0);
             }
-            ProfilerTimer.CalcLateUpdate();
             if (ShowGUI) {
                 Stats = CalcStats(true);
             } else {
