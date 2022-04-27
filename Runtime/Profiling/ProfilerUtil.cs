@@ -29,25 +29,25 @@ namespace Edger.Unity.Profiling {
         public bool ShowGUI = false;
         public Color Color = Color.yellow;
 
-        public double SlowUpdateSeconds = 0.009;
-        public double SlowFixedUpdateSeconds = 0.004;
-        public double SlowLateUpdateSeconds = 0.004;
+        public double SlowUpdateSeconds = 0.01;
+        public double SlowFixedUpdateSeconds = 0.01;
+        public double SlowLateUpdateSeconds = 0.01;
 
         public void Update() {
             if (ProfilerTimer.CalcUpdateSeconds(SlowUpdateSeconds)) {
-                Log.Custom(LoggerConsts.TRACE, "slow_Update: {0:F2} ms", ProfilerTimer.UpdateSeconds * 1000.0);
+                Custom(LoggerConsts.TRACE, "slow_Update: {0:F2} ms", ProfilerTimer.UpdateSeconds * 1000.0);
             }
         }
 
         public void FixedUpdate() {
             if (ProfilerTimer.CalcFixedUpdateSeconds(SlowFixedUpdateSeconds)) {
-                Log.Custom(LoggerConsts.TRACE, "slow_FixedUpdate: {0:F2} ms", ProfilerTimer.FixedUpdateSeconds * 1000.0);
+                Custom(LoggerConsts.TRACE, "slow_FixedUpdate: {0:F2} ms", ProfilerTimer.FixedUpdateSeconds * 1000.0);
             }
         }
 
         public void LateUpdate() {
             if (ProfilerTimer.CalcLateUpdateSeconds(SlowLateUpdateSeconds)) {
-                Log.Custom(LoggerConsts.TRACE, "slow_LateUpdate: {0:F2} ms", ProfilerTimer.LateUpdateSeconds * 1000.0);
+                Custom(LoggerConsts.TRACE, "slow_LateUpdate: {0:F2} ms", ProfilerTimer.LateUpdateSeconds * 1000.0);
             }
             if (ShowGUI) {
                 Stats = CalcStats(true);

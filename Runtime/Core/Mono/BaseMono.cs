@@ -47,12 +47,10 @@ namespace Edger.Unity {
         protected virtual void OnReset() {}
         protected virtual void OnAwake() {}
 
-        public virtual bool LogDebug { get { return false; } }
-        public virtual string LogPrefix { get { return string.Format("<{0}>[{1}] ", GetType().Name, gameObject.name); } }
-        public virtual bool DebugMode { get { return false; } }
+        public bool DebugMode { get; set; }
 
-        public bool _Debugging = false;
-        public virtual bool Debugging { get { return false; } }
+        public virtual bool LogDebug { get { return DebugMode; } }
+        public virtual string LogPrefix { get { return string.Format("<{0}>[{1}] ", GetType().Name, gameObject.name); } }
 
         public void Critical(string format, params object[] values) {
             Log.AddLogWithStackTrace(this, LoggerConsts.CRITICAL, LogPrefix, format, values);
