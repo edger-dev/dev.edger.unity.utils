@@ -27,7 +27,14 @@ namespace Edger.Unity.Remote {
         private UdpServer _Server;
 
         public void Start() {
-    #if !UNITY_EDITOR
+    #if UNITY_EDITOR
+            Type t = AssemblyUtil.GetType("UnityEditor.EditorApplication");
+            if (t != null) {
+                if (t.GetProperty("isPlaying").GetValue(null).As<bool>()) {
+                    _Server = UdpServer.FactoryWithFreePort(Port);
+                }
+            }
+    #else
             _Server = UdpServer.FactoryWithFreePort(Port);
     #endif
             if (_Server != null) {

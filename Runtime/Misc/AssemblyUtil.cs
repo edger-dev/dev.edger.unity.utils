@@ -133,7 +133,7 @@ namespace Edger.Unity {
                     if (result == null) {
                         result = t;
                     } else {
-                        Log.Critical("Type Conflicted: {0}: {1} -> {2}", fullName, result, t);
+                        Log.Error("Type Conflicted: {0}: {1} -> {2}", fullName, result, t);
                     }
                 }
             });
