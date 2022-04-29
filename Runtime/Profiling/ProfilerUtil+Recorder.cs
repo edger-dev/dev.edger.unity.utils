@@ -137,12 +137,10 @@ namespace Edger.Unity.Profiling {
 
         public static void AddCommonItems(int capacity = DEFAULT_CAPACITY) {
             AddProfilerItem(ProfilerCategory.Internal, "Main Thread", ProfilerItemFormat.MilliSeconds, capacity);
-            /* these not working
             AddProfilerItem(ProfilerCategory.Internal, "Render Thread", ProfilerItemFormat.MilliSeconds, capacity);
             AddProfilerItem(ProfilerCategory.Scripts, "BehaviourUpdate", ProfilerItemFormat.MilliSeconds, capacity);
             AddProfilerItem(ProfilerCategory.Scripts, "CoroutinesDelayed Calls", ProfilerItemFormat.MilliSeconds, capacity);
             AddProfilerItem(ProfilerCategory.Render, "WaitForTargetFPS", ProfilerItemFormat.MilliSeconds, capacity);
-            */
             AddProfilerItem(ProfilerCategory.Render, "SetPass Calls Count", ProfilerItemFormat.Counter, capacity);
             AddProfilerItem(ProfilerCategory.Render, "Draw Calls Count", ProfilerItemFormat.Counter, capacity);
             AddProfilerItem(ProfilerCategory.Render, "Vertices Count", ProfilerItemFormat.Counter, capacity);
