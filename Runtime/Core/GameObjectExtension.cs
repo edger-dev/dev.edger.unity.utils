@@ -13,5 +13,16 @@ namespace Edger.Unity {
             }
             return result;
         }
+
+        public static bool InTree(this GameObject go, GameObject root) {
+            if (go == null || root == null) return false;
+            Transform rootTrans = root.transform;
+            Transform trans = go.transform;
+            while (trans != null) {
+                if (trans == rootTrans) return true;
+                trans = trans.parent;
+            }
+            return false;
+        }
     }
 }

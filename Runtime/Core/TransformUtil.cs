@@ -81,6 +81,5 @@ namespace Edger.Unity {
             if (parent == null) return null;
             return parent.Find(name);
         }
-
     }
 }

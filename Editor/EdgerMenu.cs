@@ -49,7 +49,7 @@ namespace Edger.Unity.Editor {
                     count += ShaderFixer.FixGameObject(go, includeInactive, fixers);
                 }
             });
-            Log.Error("FixShadersInScene() -> GameObject count: {0}, Material count: {1}", goCount, count);
+            Log.Info("FixShadersInScene() -> GameObject count: {0}, Material count: {1}", goCount, count);
             if (count == 0) {
                 EditorUtil.DisplayOkDialog(Log.Provider, "Fix Shaders in Scene", "Nothing Found in Scene", true);
             }
