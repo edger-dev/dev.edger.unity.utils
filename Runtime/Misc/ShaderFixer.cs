@@ -73,7 +73,7 @@ namespace Edger.Unity {
             if (target == null) return 0;
             int count = 0;
             var materials = GetMaterials(target);
-            Log.InfoFrom(target, "FixShaders(): {0} -> [{1}]", TransformUtil.GetPath(target.transform), materials.Length);
+            //Log.InfoFrom(target, "FixShaders(): {0} -> [{1}]", TransformUtil.GetPath(target.transform), materials.Length);
             for (int i = 0; i < materials.Length; i++) {
                 if (materials != null) {
                     var ok = FixMatereial(target, materials[i], i);
