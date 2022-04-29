@@ -137,12 +137,19 @@ namespace Edger.Unity.Profiling {
 
         public static void AddCommonItems(int capacity = DEFAULT_CAPACITY) {
             AddProfilerItem(ProfilerCategory.Internal, "Main Thread", ProfilerItemFormat.MilliSeconds, capacity);
-            AddProfilerItem(ProfilerCategory.Internal, "Wait For Target FPS", ProfilerItemFormat.MilliSeconds, capacity);
-            AddProfilerItem(ProfilerCategory.Memory, "System Used Memory", ProfilerItemFormat.MegaBytes, capacity);
-            AddProfilerItem(ProfilerCategory.Memory, "GC Reserved Memory", ProfilerItemFormat.MegaBytes, capacity);
+            /* these not working
+            AddProfilerItem(ProfilerCategory.Internal, "Render Thread", ProfilerItemFormat.MilliSeconds, capacity);
+            AddProfilerItem(ProfilerCategory.Scripts, "BehaviourUpdate", ProfilerItemFormat.MilliSeconds, capacity);
+            AddProfilerItem(ProfilerCategory.Scripts, "CoroutinesDelayed Calls", ProfilerItemFormat.MilliSeconds, capacity);
+            AddProfilerItem(ProfilerCategory.Render, "WaitForTargetFPS", ProfilerItemFormat.MilliSeconds, capacity);
+            */
             AddProfilerItem(ProfilerCategory.Render, "SetPass Calls Count", ProfilerItemFormat.Counter, capacity);
             AddProfilerItem(ProfilerCategory.Render, "Draw Calls Count", ProfilerItemFormat.Counter, capacity);
             AddProfilerItem(ProfilerCategory.Render, "Vertices Count", ProfilerItemFormat.Counter, capacity);
+            /* using graphy for these
+            AddProfilerItem(ProfilerCategory.Memory, "System Used Memory", ProfilerItemFormat.MegaBytes, capacity);
+            AddProfilerItem(ProfilerCategory.Memory, "GC Reserved Memory", ProfilerItemFormat.MegaBytes, capacity);
+            */
         }
 
         public static string CalcStats(bool calcAvarage) {

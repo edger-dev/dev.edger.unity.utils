@@ -1,11 +1,14 @@
+using System;
 using System.Reflection; 
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System;
+using System.Text;
 
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Unity.Profiling;
+using Unity.Profiling.LowLevel.Unsafe;
 
 using UnityEditor;
 
@@ -75,6 +78,50 @@ namespace Edger.Unity.Editor {
             if (count == 0) {
                 EditorUtil.DisplayOkDialog(Log.Provider, "Fix Shaders in Scene", "Nothing Found in Scene", true);
             }
+        }
+
+        /***********************************************************************************************************************************************
+        * Source: https://docs.unity3d.com/2020.2/Documentation/ScriptReference/Unity.Profiling.LowLevel.Unsafe.ProfilerRecorderHandle.GetAvailable.html
+        ************************************************************************************************************************************************/
+
+        struct StatInfo {
+            public ProfilerCategory Cat;
+            public string Name;
+            public ProfilerMarkerDataUnit Unit;
+        }
+
+        [MenuItem("Edger/List ProfilerRecorders")] // ALT + E
+        public static void ListProfilerRecorders() {
+            LogMenuItem((MenuItem)MethodBase.GetCurrentMethod().GetCustomAttributes(typeof(MenuItem), true)[0]);
+
+            var availableStatHandles = new List<ProfilerRecorderHandle>();
+            ProfilerRecorderHandle.GetAvailable(availableStatHandles);
+
+            var availableStats = new List<StatInfo>(availableStatHandles.Count);
+            foreach (var h in availableStatHandles) {
+                var statDesc = ProfilerRecorderHandle.GetDescription(h);
+                var statInfo = new StatInfo() {
+                    Cat = statDesc.Category,
+                    Name = statDesc.Name,
+                    Unit = statDesc.UnitType
+                };
+                availableStats.Add(statInfo);
+            }
+            availableStats.Sort((a, b) => {
+                var result = string.Compare(a.Cat.ToString(), b.Cat.ToString());
+                if (result != 0)
+                    return result;
+
+                return string.Compare(a.Name, b.Name);
+            });
+
+            var sb = new StringBuilder("Available stats:\n");
+            foreach (var s in availableStats) {
+                sb.AppendLine($"{s.Cat.ToString()}\t\t - {s.Name}\t\t - {s.Unit}");
+            }
+
+            FileUtil.WriteFile("ProfilerRecorders.txt", sb.ToString());
+            Log.Error(sb.ToString());
         }
 
         [MenuItem ("Edger/Clear Console Logs %&c", false, 100001)] // CTRL/CMD + ALT + C
