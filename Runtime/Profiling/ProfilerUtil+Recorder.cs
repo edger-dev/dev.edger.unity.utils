@@ -137,6 +137,7 @@ namespace Edger.Unity.Profiling {
 
         public static void AddCommonItems(int capacity = DEFAULT_CAPACITY) {
             AddProfilerItem(ProfilerCategory.Internal, "Main Thread", ProfilerItemFormat.MilliSeconds, capacity);
+            AddProfilerItem(ProfilerCategory.Internal, "Wait For Target FPS", ProfilerItemFormat.MilliSeconds, capacity);
             AddProfilerItem(ProfilerCategory.Memory, "System Used Memory", ProfilerItemFormat.MegaBytes, capacity);
             AddProfilerItem(ProfilerCategory.Memory, "GC Reserved Memory", ProfilerItemFormat.MegaBytes, capacity);
             AddProfilerItem(ProfilerCategory.Render, "SetPass Calls Count", ProfilerItemFormat.Counter, capacity);

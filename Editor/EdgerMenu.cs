@@ -5,6 +5,8 @@ using System.IO;
 using System;
 
 using UnityEngine;
+using UnityEngine.EventSystems;
+
 using UnityEditor;
 
 using Edger.Unity;
@@ -21,6 +23,26 @@ namespace Edger.Unity.Editor {
                 Log.Init(new UnityLogProvider(false, "editor_menu"));
             }
             Log.Error("EdgerMenu: {0}", menu.menuItem);
+        }
+    #if UNITY_EDITOR_OSX
+        [MenuItem("Edger/Raycast UI %u")] // CMD + U
+    #else
+        [MenuItem("Edger/Raycast UI &u")] // ALT + U
+    #endif
+        public static void RaycastUI() {
+            if (EventSystem.current == null) return;
+            var raycastResults = new List<RaycastResult>();
+            var eventData = new PointerEventData(EventSystem.current);
+            eventData.position = Input.mousePosition;
+            EventSystem.current.RaycastAll(eventData, raycastResults);
+            if (raycastResults.Count > 0) {
+                ClearConsole();
+                Log.Error("RaycastUI() [{0}] ---------------------------------", raycastResults.Count);
+            }
+            for (var i = 0; i < raycastResults.Count; i++) {
+                var r = raycastResults[i];
+                Log.ErrorFrom(r.gameObject, "RaycastUI() [{0}] {1} -> depth: {2}, sortingLayer: {3}, sortingOrder: {4}", i, r.gameObject.name, r.depth, r.sortingLayer, r.sortingOrder);
+            }
         }
 
     #if UNITY_EDITOR_OSX
