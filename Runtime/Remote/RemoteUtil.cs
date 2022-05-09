@@ -7,6 +7,7 @@ using Edger.Unity;
 using Edger.Unity.Udp;
 
 namespace Edger.Unity.Remote {
+    [DisallowMultipleComponent()]
     public partial class RemoteUtil : BaseMono {
         public const int DEFAULT_UDP_PORT = 2295;
 
