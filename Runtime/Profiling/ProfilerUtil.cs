@@ -10,6 +10,7 @@ namespace Edger.Unity.Profiling {
     // Note: to keep this called after all other scripts, need to put ProfilerUtil
     // as the last one in "Project Settings -> Script Execution Order"
     // http://docs.unity3d.com/Documentation/Components/class-ScriptExecution.html
+    [DisallowMultipleComponent()]
     public partial class ProfilerUtil : BaseMono {
         private static ProfilerUtil _Instance;
         public static ProfilerUtil Instance {

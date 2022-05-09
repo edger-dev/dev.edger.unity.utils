@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Edger.Unity {
+    [DisallowMultipleComponent()]
     public partial class GameObjectUtil: MonoBehaviour {
         private static GameObjectUtil _Instance;
         public static GameObjectUtil Instance {
