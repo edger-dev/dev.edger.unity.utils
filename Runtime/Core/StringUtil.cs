@@ -77,5 +77,13 @@ namespace Edger.Unity {
         public static byte[] EncodeUtf8ToBytes(string content) {
             return System.Text.Encoding.UTF8.GetBytes(content);
         }
+
+        public static void AddLine(this List<string> lines, string format, params object[] values) {
+            string line = format;
+            if (values != null && values.Length > 0) {
+                line = string.Format(format, values);
+            }
+            lines.Add(line);
+        }
     }
 }

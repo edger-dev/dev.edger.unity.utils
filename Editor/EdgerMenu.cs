@@ -124,6 +124,11 @@ namespace Edger.Unity.Editor {
             Log.Error(sb.ToString());
         }
 
+        [MenuItem ("Edger/Generate Unity Consts", false, 10001)]
+        public static void GenerateUnityConsts() {
+            LogMenuItem((MenuItem)MethodBase.GetCurrentMethod().GetCustomAttributes(typeof(MenuItem), true)[0]);
+            UnityConstsGenerator.GenerateConsts();
+        }
         [MenuItem ("Edger/Clear Console Logs %&c", false, 100001)] // CTRL/CMD + ALT + C
         public static void ClearConsole() {
             EditorUtil.ClearConsole();
