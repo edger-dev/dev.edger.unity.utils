@@ -132,7 +132,7 @@ namespace Edger.Unity {
         }
 
         protected virtual string GetTickMsg() {
-            return "";
+            return $"[{UnityEngine.Time.frameCount}] ";
         }
     }
 }

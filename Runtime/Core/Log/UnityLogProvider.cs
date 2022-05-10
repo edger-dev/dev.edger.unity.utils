@@ -62,9 +62,9 @@ namespace Edger.Unity {
 
         private void OnLogInPlayer(object source, string kind, string log, StackTrace stackTrace) {
             if (stackTrace != null) {
-                UnityEngine.Debug.LogError(GetFramePrefex() + log);
+                UnityEngine.Debug.LogError(log);
             } else if (this.LogDebug || kind != LoggerConsts.DEBUG) {
-                UnityEngine.Debug.Log(GetFramePrefex() + log);
+                UnityEngine.Debug.Log(log);
             }
         }
 
@@ -82,14 +82,10 @@ namespace Edger.Unity {
                 _GettingContext = false;
             }
             if (stackTrace != null || (TraceAsErrorInEditor && kind == LoggerConsts.TRACE)) {
-                UnityEngine.Debug.LogError(GetFramePrefex() + log, context);
+                UnityEngine.Debug.LogError(log, context);
             } else if (LogDebugInEditor || kind != LoggerConsts.DEBUG) {
-                UnityEngine.Debug.Log(GetFramePrefex() + log, context);
+                UnityEngine.Debug.Log(log, context);
             }
-        }
-
-        private string GetFramePrefex() {
-            return $"[{Time.frameCount}] ";
         }
     }
 }
