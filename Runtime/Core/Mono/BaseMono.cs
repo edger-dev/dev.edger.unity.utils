@@ -94,6 +94,48 @@ namespace Edger.Unity {
             }
         }
 
+        public void CriticalFrom(object source, string format, params object[] values) {
+            Log.AddLogWithStackTrace(source == null ? this : source, LoggerConsts.CRITICAL, LogPrefix, format, values);
+        }
+
+        public void ErrorFrom(object source, string format, params object[] values) {
+            Log.AddLogWithStackTrace(source == null ? this : source, LoggerConsts.ERROR, LogPrefix, format, values);
+        }
+
+        public void InfoFrom(object source, string format, params object[] values) {
+            if (DebugMode) {
+                Log.AddLogWithStackTrace(source == null ? this : source, LoggerConsts.INFO, LogPrefix, format, values);
+            } else {
+                Log.AddLog(source == null ? this : source, LoggerConsts.INFO, LogPrefix, format, values);
+            }
+        }
+
+        public void DebugFrom(object source, string format, params object[] values) {
+            if (DebugMode) {
+                Log.AddLogWithStackTrace(source == null ? this : source, LoggerConsts.DEBUG, LogPrefix, format, values);
+            } else if (LogDebug) {
+                Log.AddLog(source == null ? this : source, LoggerConsts.DEBUG, LogPrefix, format, values);
+            }
+        }
+
+        public void ErrorOrDebugFrom(bool isDebug, object source, string format, params object[] values) {
+            if (!isDebug) {
+                Log.AddLogWithStackTrace(source == null ? this : source, LoggerConsts.ERROR, LogPrefix, format, values);
+            } else if (DebugMode) {
+                Log.AddLogWithStackTrace(source == null ? this : source, LoggerConsts.DEBUG, LogPrefix, format, values);
+            } else if (LogDebug) {
+                Log.AddLog(source == null ? this : source, LoggerConsts.DEBUG, LogPrefix, format, values);
+            }
+        }
+
+        public void CustomFrom(object source, string kind, string format, params object[] values) {
+            if (DebugMode) {
+                Log.AddLogWithStackTrace(source == null ? this : source, kind, LogPrefix, format, values);
+            } else {
+                Log.AddLog(source == null ? this : source, kind, LogPrefix, format, values);
+            }
+        }
+
         public void ClearCoroutine(ref IEnumerator coroutine) {
             if (coroutine != null) {
                 StopCoroutine(coroutine);
