@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Edger.Unity {
     public static class ObjectExtension {
@@ -34,6 +35,15 @@ namespace Edger.Unity {
                 return $"<{obj.GetType().Name}>{unityObj.name}";
             }
             return $"<{obj.GetType().Name}>";
+        }
+
+        public static void SelectInEditor(this object obj) {
+            if (!Application.isEditor) {
+                return;
+            }
+            var selection = System.Type.GetType("UnityEditor.Selection,UnityEditor.dll");
+            var activeObject = selection.GetProperty("activeObject", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+            activeObject.SetValue(null, obj, null);
         }
     }
 }

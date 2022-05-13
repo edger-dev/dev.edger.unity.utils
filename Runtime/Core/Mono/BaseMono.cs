@@ -101,38 +101,46 @@ namespace Edger.Unity {
             }
         }
 
-        public void RunCoroutine(ref IEnumerator coroutine, Func<IEnumerator> doAsync) {
+        public bool CheckCoroutine(ref IEnumerator coroutine, bool allowClear=true) {
             if (coroutine != null) {
-                Error("Coroutine Not Finished Yet: {0}", coroutine);
+                if (allowClear) {
+                    ClearCoroutine(ref coroutine);
+                } else {
+                    Error("Coroutine Not Finished Yet: {0}", coroutine);
+                    return false;
+                }
             }
-            coroutine = doAsync();
-            StartCoroutine(coroutine);
+            return true;
         }
 
-        public void RunCoroutine<T>(ref IEnumerator coroutine, Func<T, IEnumerator> doAsync, T param) {
-            if (coroutine != null) {
-                Error("Coroutine Not Finished Yet: {0}", coroutine);
+        public void RunCoroutine(ref IEnumerator coroutine, Func<IEnumerator> doAsync, bool allowClear=true) {
+            if (CheckCoroutine(ref coroutine, allowClear)) {
+                coroutine = doAsync();
+                StartCoroutine(coroutine);
             }
-            coroutine = doAsync(param);
-            StartCoroutine(coroutine);
+        }
+
+        public void RunCoroutine<T>(ref IEnumerator coroutine, Func<T, IEnumerator> doAsync, T param, bool allowClear=true) {
+            if (CheckCoroutine(ref coroutine, allowClear)) {
+                coroutine = doAsync(param);
+                StartCoroutine(coroutine);
+            }
         }
 
         public void RunCoroutine<T1, T2>(ref IEnumerator coroutine, Func<T1, T2, IEnumerator> doAsync,
-                                            T1 param1, T2 param2) {
-            if (coroutine != null) {
-                Error("Coroutine Not Finished Yet: {0}", coroutine);
+                                            T1 param1, T2 param2, bool allowClear=true) {
+            if (CheckCoroutine(ref coroutine, allowClear)) {
+                coroutine = doAsync(param1, param2);
+                StartCoroutine(coroutine);
             }
-            coroutine = doAsync(param1, param2);
-            StartCoroutine(coroutine);
         }
 
         public void RunCoroutine<T1, T2, T3>(ref IEnumerator coroutine, Func<T1, T2, T3, IEnumerator> doAsync,
-                                            T1 param1, T2 param2, T3 param3) {
-            if (coroutine != null) {
-                Error("Coroutine Not Finished Yet: {0}", coroutine);
+                                            T1 param1, T2 param2, T3 param3, bool allowClear=true) {
+            if (CheckCoroutine(ref coroutine, allowClear)) {
+                coroutine = doAsync(param1, param2, param3);
+                StartCoroutine(coroutine);
             }
-            coroutine = doAsync(param1, param2, param3);
-            StartCoroutine(coroutine);
         }
     }
 }
