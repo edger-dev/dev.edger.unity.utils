@@ -81,6 +81,7 @@ namespace Edger.Unity.Profiling {
             }
             builder.AppendLine();
         }
+
         public void AppendLine(StringBuilder builder, bool calcAverage) {
             if (calcAverage) {
                 AppendLine(calcAverage, builder, Prefix, Format, CalcAverageValue());
@@ -157,6 +158,20 @@ namespace Edger.Unity.Profiling {
                 item.AppendLine(builder, calcAvarage);
             }
             ProfilerItem.AppendLine(calcAvarage, builder, "Time", ProfilerItemFormat.Seconds, Time.realtimeSinceStartupAsDouble);
+            return builder.ToString();
+        }
+
+        public static string CalcTimeSeries() {
+            var builder = _StringBuilder;
+            builder.Clear();
+            builder.Append("profiler,");
+            foreach (var item in _Items) {
+                builder.Append(item.Prefix);
+                builder.Append("=");
+                builder.Append(item.Recorder.LastValueAsDouble.ToString());
+                builder.Append(" ");
+            }
+            builder.Append(DateTimeUtil.UnixNanoseconds.ToString());
             return builder.ToString();
         }
     }

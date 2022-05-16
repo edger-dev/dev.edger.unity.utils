@@ -95,7 +95,7 @@ namespace Edger.Unity.Editor.Remote {
         }
 
         private void OnSetClicked(TextField settingView) {
-            SendRequest(RemoteUtil.Command_Get, settingView.label, settingView.text);
+            SendRequest(RemoteUtil.Command_Set, settingView.label, settingView.text);
         }
 
         private void OnToggleClicked(TextField settingView) {

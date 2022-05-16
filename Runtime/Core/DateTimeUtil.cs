@@ -33,6 +33,12 @@ namespace Edger.Unity {
             }
         }
 
+        public static long UnixNanoseconds {
+            get {
+                return ToUnixNanoseconds(DateTime.UtcNow);
+            }
+        }
+
         public static long ToUnixSeconds(DateTime theDate)
         {
             TimeSpan t = (DateTime.UtcNow - new DateTime(1970, 1, 1));
@@ -43,6 +49,12 @@ namespace Edger.Unity {
         {
             TimeSpan t = (theDate - new DateTime(1970, 1, 1));
             return (long)t.TotalMilliseconds;
+        }
+
+        public static long ToUnixNanoseconds(DateTime theDate)
+        {
+            TimeSpan t = (theDate - new DateTime(1970, 1, 1));
+            return (long)t.Ticks * 100;
         }
 
         public static DateTime FromUnixSeconds(long unixSeconds) {

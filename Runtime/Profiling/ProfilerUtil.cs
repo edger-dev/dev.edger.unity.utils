@@ -56,7 +56,7 @@ namespace Edger.Unity.Profiling {
                 _TextStyle = null;
             }
             if (_UdpClient != null && _UdpClient.Connected) {
-                _UdpClient.SendData(CalcStats(false));
+                _UdpClient.SendData(CalcTimeSeries());
             }
         }
 
