@@ -166,12 +166,17 @@ namespace Edger.Unity.Profiling {
         public static string CalcTimeSeries() {
             var builder = _StringBuilder;
             builder.Clear();
-            builder.Append("profiler,");
-            foreach (var item in _Items) {
+            builder.Append("profiler ");
+            for (int i = 0; i < _Items.Count; i++) {
+                var item = _Items[i];
                 builder.Append(item.EscapedPrefix);
                 builder.Append("=");
                 builder.Append(item.Recorder.LastValueAsDouble.ToString());
-                builder.Append(" ");
+                if (i < _Items.Count - 1) {
+                    builder.Append(",");
+                } else {
+                    builder.Append(" ");
+                }
             }
             builder.Append(DateTimeUtil.UnixNanoseconds.ToString());
             return builder.ToString();
