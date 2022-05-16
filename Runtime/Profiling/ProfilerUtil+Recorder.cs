@@ -18,6 +18,7 @@ namespace Edger.Unity.Profiling {
     public class ProfilerItem {
         public readonly ProfilerRecorder Recorder;
         public readonly string Prefix;
+        public readonly string EscapedPrefix;
         public readonly ProfilerItemFormat Format;
 
         private List<ProfilerRecorderSample> _Samples = null;
@@ -25,6 +26,7 @@ namespace Edger.Unity.Profiling {
         public ProfilerItem(ProfilerRecorder recorder, string prefix, ProfilerItemFormat format) {
             Recorder = recorder;
             Prefix = prefix;
+            EscapedPrefix = prefix.ToLower().Replace(" ", "_");
             Format = format;
             _Samples = new List<ProfilerRecorderSample>(recorder.Capacity);
         }
@@ -166,7 +168,7 @@ namespace Edger.Unity.Profiling {
             builder.Clear();
             builder.Append("profiler,");
             foreach (var item in _Items) {
-                builder.Append(item.Prefix);
+                builder.Append(item.EscapedPrefix);
                 builder.Append("=");
                 builder.Append(item.Recorder.LastValueAsDouble.ToString());
                 builder.Append(" ");
