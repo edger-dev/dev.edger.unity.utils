@@ -26,7 +26,7 @@ namespace Edger.Unity.Profiling {
         public ProfilerItem(ProfilerRecorder recorder, string prefix, ProfilerItemFormat format) {
             Recorder = recorder;
             Prefix = prefix;
-            EscapedPrefix = prefix.ToLower().Replace(" ", "_");
+            EscapedPrefix = prefix.Replace(" ", "_");
             Format = format;
             _Samples = new List<ProfilerRecorderSample>(recorder.Capacity);
         }
