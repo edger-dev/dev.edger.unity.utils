@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" MemoryProfiler="Unity.MemoryProfiler.Editor" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:GroupBox name="header" style="flex-direction: row;">
+        <ui:TextField picking-mode="Ignore" label="IP" value="10.0.1.101" name="remote_ip" text="10.0.1.101" style="flex-grow: 1;" />
+        <ui:TextField picking-mode="Ignore" label="Port" value="2295" text="2295" name="remote_port" style="flex-grow: 1;" />
+        <ui:Button text="Refresh" display-tooltip-when-elided="true" name="refresh" />
+    </ui:GroupBox>
+    <ui:ListView focusable="true" name="settings" show-border="false" style="flex-grow: 1;" />
+</ui:UXML>

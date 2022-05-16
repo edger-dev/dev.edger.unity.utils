@@ -87,6 +87,14 @@ namespace Edger.Unity.Remote {
             }
         }
 
+        public static bool RemoteIsBool(this string value) {
+            if (string.IsNullOrEmpty(value)) {
+                return false;
+            }
+            var v = value.ToLower();
+            return v == "true" || v == "false";
+        }
+
         public static bool RemoteToBool(this string value, bool defaultValue=default(bool)) {
             if (string.IsNullOrEmpty(value)) return defaultValue;
             return value.ToLower() == "true";

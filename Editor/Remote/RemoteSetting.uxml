@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" MemoryProfiler="Unity.MemoryProfiler.Editor" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:GroupBox style="flex-direction: row; padding-top: 3px; padding-bottom: 3px; margin-top: 3px;">
+        <ui:TextField picking-mode="Ignore" label="value" value="filler text" text="filler text" name="setting" style="flex-grow: 1;" />
+        <ui:Button text="Set" display-tooltip-when-elided="true" name="set" />
+        <ui:Button text="Toggle" display-tooltip-when-elided="true" name="toggle" />
+    </ui:GroupBox>
+</ui:UXML>
