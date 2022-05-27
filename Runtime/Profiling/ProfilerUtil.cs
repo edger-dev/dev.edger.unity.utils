@@ -70,6 +70,7 @@ namespace Edger.Unity.Profiling {
         }
 
         private IRemoteSetting _Visible;
+        private IRemoteSetting _TargetFrameRate;
         private IRemoteSetting _ToUdp;
 
         public void OnEnable() {
@@ -79,10 +80,16 @@ namespace Edger.Unity.Profiling {
                 ShowGUI = value.RemoteToBool();
                 _TextStyle = null;
             });
+            _TargetFrameRate = RemoteUtil.Instance.Register("Profiler.TargetFrameRate", () => {
+                return Application.targetFrameRate.ToRemote();
+            }, (value) => {
+                Application.targetFrameRate = value.RemoteToInt();
+            });
             _ToUdp = RemoteUtil.Instance.Register("Profiler.ToUdp", GetToUdp, SetToUdp);
         }
         public void OnDisable() {
             RemoteUtil.Instance.Unregister(ref _Visible);
+            RemoteUtil.Instance.Unregister(ref _TargetFrameRate);
             RemoteUtil.Instance.Unregister(ref _ToUdp);
         }
     }
