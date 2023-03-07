@@ -7,6 +7,7 @@ namespace Edger.Unity {
         public EdgerException(string msg)
                     : base(msg) {
         }
+
         public EdgerException(string format, params object[] values)
                     : base(Log.GetMsg(format, values)) {
         }
@@ -19,6 +20,12 @@ namespace Edger.Unity {
         public EdgerException(Exception innerException,
                                 string format, params object[] values)
                     : base(Log.GetMsg(format, values), innerException) {
+        }
+    }
+
+    public class CriticalException : EdgerException {
+        public CriticalException(string msg)
+                    : base(msg) {
         }
     }
 }

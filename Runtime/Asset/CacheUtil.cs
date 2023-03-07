@@ -119,7 +119,7 @@ namespace Edger.Unity {
             try {
                 DirectoryInfo dir = new DirectoryInfo(cacheFromPath);
                 if (!dir.Exists) {
-                    throw new CriticalException("CopyFolder Failed: Dir Not Exist: {0}", dir.FullName);
+                    logger.Critical("CopyFolder Failed: Dir Not Exist: {0}", dir.FullName);
                 }
                 DoCopyFolder(logger, pathes, cacheToPath, "", dir);
             } catch (System.Exception e) {
