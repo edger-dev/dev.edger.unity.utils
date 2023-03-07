@@ -11,6 +11,8 @@ namespace Edger.Unity {
     }
 
     public abstract class BaseMono : MonoBehaviour, ILogger {
+        public static bool DevMode { get => UnityEngine.Debug.isDebugBuild; }
+
         [MonoTypeAttribute]
         [SerializeField]
         private string _MonoType = null;
@@ -47,7 +49,15 @@ namespace Edger.Unity {
         protected virtual void OnReset() {}
         protected virtual void OnAwake() {}
 
-        public bool DebugMode { get; set; }
+        [SerializeField]
+        private bool _DebugMode;
+
+        public bool DebugMode {
+            get => _DebugMode;
+            set {
+                _DebugMode = value;
+            }
+        }
 
         public virtual bool LogDebug { get { return DebugMode; } }
         public virtual string LogPrefix { get { return string.Format("<{0}>[{1}] ", GetType().Name, gameObject.name); } }
