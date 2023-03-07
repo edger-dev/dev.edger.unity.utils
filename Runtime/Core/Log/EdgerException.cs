@@ -3,20 +3,20 @@ using System.Text;
 using System.Collections.Generic;
 
 namespace Edger.Unity {
-    public class CriticalException : Exception {
-        public CriticalException(string msg)
+    public class EdgerException : Exception {
+        public EdgerException(string msg)
                     : base(msg) {
         }
-        public CriticalException(string format, params object[] values)
+        public EdgerException(string format, params object[] values)
                     : base(Log.GetMsg(format, values)) {
         }
 
-        public CriticalException(Exception innerException,
+        public EdgerException(Exception innerException,
                                 string msg)
                     : base(msg, innerException) {
         }
 
-        public CriticalException(Exception innerException,
+        public EdgerException(Exception innerException,
                                 string format, params object[] values)
                     : base(Log.GetMsg(format, values), innerException) {
         }
