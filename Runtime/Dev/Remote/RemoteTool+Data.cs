@@ -6,8 +6,8 @@ using UnityEngine;
 using Edger.Unity;
 using Edger.Unity.Udp;
 
-namespace Edger.Unity.Remote {
-    public partial class RemoteUtil {
+namespace Edger.Unity.Dev.Remote {
+    public partial class RemoteTool {
         [Serializable]
         public struct Request {
             public int port;

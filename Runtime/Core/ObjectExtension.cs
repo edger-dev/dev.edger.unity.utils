@@ -28,6 +28,14 @@ namespace Edger.Unity {
             return TryAs<T>(obj) != null;
         }
 
+        public static bool IsNull(this object obj) {
+            return obj == null;
+        }
+
+        public static bool IsNotNull(this object obj) {
+            return obj != null;
+        }
+
         public static string GetTypeAndName(this object obj) {
             if (obj == null) return "null";
             UnityEngine.Object unityObj = As<UnityEngine.Object>(obj);

@@ -5,10 +5,10 @@ using UnityEngine.Profiling;
 using Unity.Profiling;
 
 using Edger.Unity.Udp;
-using Edger.Unity.Remote;
+using Edger.Unity.Dev.Remote;
 
-namespace Edger.Unity.Profiling {
-    public partial class ProfilerUtil {
+namespace Edger.Unity.Dev.Profiling {
+    public partial class ProfilerTool {
         public const string MULTICAST_ADDRESS = "224.0.0.94";
         public const int DEFAULT_UDP_PORT = 2294;
 

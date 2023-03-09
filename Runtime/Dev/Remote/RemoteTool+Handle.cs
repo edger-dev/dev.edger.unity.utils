@@ -6,8 +6,8 @@ using UnityEngine;
 using Edger.Unity;
 using Edger.Unity.Udp;
 
-namespace Edger.Unity.Remote {
-    public partial class RemoteUtil : BaseMono {
+namespace Edger.Unity.Dev.Remote {
+    public partial class RemoteTool : BaseMono {
         public const string Command_List = "list";
         public const string Command_Get = "get";
         public const string Command_Set = "set";

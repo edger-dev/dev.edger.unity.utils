@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Profiling;
 using Unity.Profiling;
 
-namespace Edger.Unity.Profiling {
+namespace Edger.Unity.Dev.Profiling {
     public enum ProfilerItemFormat {
         Counter,
         MegaBytes,
@@ -93,7 +93,7 @@ namespace Edger.Unity.Profiling {
         }
     }
 
-    public partial class ProfilerUtil {
+    public partial class ProfilerTool {
         public const int DEFAULT_CAPACITY = 15;
         private static readonly Dictionary<string, ProfilerRecorder> _Recorders = new Dictionary<string, ProfilerRecorder>();
 

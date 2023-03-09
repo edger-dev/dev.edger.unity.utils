@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Edger.Unity;
-using Edger.Unity.Remote;
+using Edger.Unity.Dev.Remote;
 
-namespace Edger.Unity.Profiling {
+namespace Edger.Unity.Dev.Profiling {
     // Note: to keep this called before all other scripts, need to put ProfilerTimer
     // as the first one in "Project Settings -> Script Execution Order"
     // http://docs.unity3d.com/Documentation/Components/class-ScriptExecution.html

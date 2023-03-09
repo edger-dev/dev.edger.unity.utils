@@ -6,7 +6,7 @@ using UnityEngine;
 using Edger.Unity;
 using Edger.Unity.Udp;
 
-namespace Edger.Unity.Remote {
+namespace Edger.Unity.Dev.Remote {
     public interface IRemoteSetting {
         public string Key { get; }
         public string GetValue();

@@ -9,7 +9,7 @@ using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 
 using Edger.Unity.Udp;
-using Edger.Unity.Remote;
+using Edger.Unity.Dev.Remote;
 
 
 namespace Edger.Unity.Editor.Remote {
@@ -38,7 +38,7 @@ namespace Edger.Unity.Editor.Remote {
         public string RemoteAddress { get; private set; }
         public int RemotePort { get; private set; }
 
-        private List<RemoteUtil.Setting> _Settings = new List<RemoteUtil.Setting>();
+        private List<RemoteTool.Setting> _Settings = new List<RemoteTool.Setting>();
         private ListView _SettingsView;
 
         public void Update() {
@@ -95,11 +95,11 @@ namespace Edger.Unity.Editor.Remote {
         }
 
         private void OnSetClicked(TextField settingView) {
-            SendRequest(RemoteUtil.Command_Set, settingView.label, settingView.text);
+            SendRequest(RemoteTool.Command_Set, settingView.label, settingView.text);
         }
 
         private void OnToggleClicked(TextField settingView) {
-            SendRequest(RemoteUtil.Command_Toggle, settingView.label);
+            SendRequest(RemoteTool.Command_Toggle, settingView.label);
         }
 
         private void OnRefreshClicked() {
@@ -109,10 +109,10 @@ namespace Edger.Unity.Editor.Remote {
             RemotePort = Convert.ToInt32(port.text);
             _Settings.Clear();
             _SettingsView.Rebuild();
-            SendRequest(RemoteUtil.Command_List);
+            SendRequest(RemoteTool.Command_List);
         }
 
-        private void SendRequest(RemoteUtil.Request request) {
+        private void SendRequest(RemoteTool.Request request) {
             var client = new UdpClient(RemoteAddress, RemotePort);
             var data = JsonUtility.ToJson(request);
             Log.Info("<RemoteConsole> Sending Request to {0}:{1} -> {2}", RemoteAddress, RemotePort, data);
@@ -120,7 +120,7 @@ namespace Edger.Unity.Editor.Remote {
         }
 
         private void SendRequest(string command, string key = "", string value = "") {
-            var request = new RemoteUtil.Request{
+            var request = new RemoteTool.Request{
                 port = ServerPort,
                 command = command,
                 key = key,
@@ -131,15 +131,15 @@ namespace Edger.Unity.Editor.Remote {
 
         private void OnReceivedPacket(UdpPacket packet) {
             Log.Info("<RemoteConsole> Packet received: {0} {1} {2}", packet.FromAddress, packet.Time, packet.Data);
-            var setting = JsonUtility.FromJson<RemoteUtil.Setting>(packet.Data);
+            var setting = JsonUtility.FromJson<RemoteTool.Setting>(packet.Data);
             if (!string.IsNullOrEmpty(setting.key)) {
                 OnReceivedSetting(setting);
             } else {
-                OnReceivedSettings(JsonUtility.FromJson<RemoteUtil.Settings>(packet.Data));
+                OnReceivedSettings(JsonUtility.FromJson<RemoteTool.Settings>(packet.Data));
             }
         }
 
-        private void OnReceivedSettings(RemoteUtil.Settings settings) {
+        private void OnReceivedSettings(RemoteTool.Settings settings) {
             _Settings.Clear();
             foreach (var setting in settings.settings) {
                 _Settings.Add(setting);
@@ -147,7 +147,7 @@ namespace Edger.Unity.Editor.Remote {
             _SettingsView.Rebuild();
         }
 
-        private void OnReceivedSetting(RemoteUtil.Setting setting) {
+        private void OnReceivedSetting(RemoteTool.Setting setting) {
             for (int i = 0; i < _Settings.Count; i++) {
                 if (_Settings[i].key == setting.key) {
                     _Settings[i] = setting;

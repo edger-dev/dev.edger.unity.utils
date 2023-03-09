@@ -4,20 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Edger.Unity;
-using Edger.Unity.Remote;
+using Edger.Unity.Dev;
+using Edger.Unity.Dev.Remote;
 
-namespace Edger.Unity.Profiling {
-    // Note: to keep this called after all other scripts, need to put ProfilerUtil
+namespace Edger.Unity.Dev.Profiling {
+    // Note: to keep this called after all other scripts, need to put ProfilerTool
     // as the last one in "Project Settings -> Script Execution Order"
     // http://docs.unity3d.com/Documentation/Components/class-ScriptExecution.html
     [DisallowMultipleComponent()]
-    public partial class ProfilerUtil : BaseMono {
-        private static ProfilerUtil _Instance;
-        public static ProfilerUtil Instance {
+    public partial class ProfilerTool : BaseMono {
+        private static ProfilerTool _Instance;
+        public static ProfilerTool Instance {
             get {
                 if (_Instance == null) {
-                    GameObjectUtil.Instance.gameObject.GetOrAddComponent<ProfilerTimer>();
-                    _Instance = GameObjectUtil.Instance.gameObject.GetOrAddComponent<ProfilerUtil>();
+                    DevTool.Instance.gameObject.GetOrAddComponent<ProfilerTimer>();
+                    _Instance = DevTool.Instance.gameObject.GetOrAddComponent<ProfilerTool>();
                 }
                 return _Instance;
             }
@@ -74,23 +75,23 @@ namespace Edger.Unity.Profiling {
         private IRemoteSetting _ToUdp;
 
         public void OnEnable() {
-            _Visible = RemoteUtil.Instance.Register("Profiler.Visible", () => {
+            _Visible = RemoteTool.Instance.Register("Profiler.Visible", () => {
                 return ShowGUI.ToRemote();
             }, (value) => {
                 ShowGUI = value.RemoteToBool();
                 _TextStyle = null;
             });
-            _TargetFrameRate = RemoteUtil.Instance.Register("Profiler.TargetFrameRate", () => {
+            _TargetFrameRate = RemoteTool.Instance.Register("Profiler.TargetFrameRate", () => {
                 return Application.targetFrameRate.ToRemote();
             }, (value) => {
                 Application.targetFrameRate = value.RemoteToInt();
             });
-            _ToUdp = RemoteUtil.Instance.Register("Profiler.ToUdp", GetToUdp, SetToUdp);
+            _ToUdp = RemoteTool.Instance.Register("Profiler.ToUdp", GetToUdp, SetToUdp);
         }
         public void OnDisable() {
-            RemoteUtil.Instance.Unregister(ref _Visible);
-            RemoteUtil.Instance.Unregister(ref _TargetFrameRate);
-            RemoteUtil.Instance.Unregister(ref _ToUdp);
+            RemoteTool.Instance.Unregister(ref _Visible);
+            RemoteTool.Instance.Unregister(ref _TargetFrameRate);
+            RemoteTool.Instance.Unregister(ref _ToUdp);
         }
     }
 }

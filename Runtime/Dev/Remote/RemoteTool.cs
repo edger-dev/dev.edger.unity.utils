@@ -5,17 +5,18 @@ using UnityEngine;
 
 using Edger.Unity;
 using Edger.Unity.Udp;
+using Edger.Unity.Dev;
 
-namespace Edger.Unity.Remote {
+namespace Edger.Unity.Dev.Remote {
     [DisallowMultipleComponent()]
-    public partial class RemoteUtil : BaseMono {
+    public partial class RemoteTool : BaseMono {
         public const int DEFAULT_UDP_PORT = 2295;
 
-        private static RemoteUtil _Instance;
-        public static RemoteUtil Instance {
+        private static RemoteTool _Instance;
+        public static RemoteTool Instance {
             get {
                 if (_Instance == null) {
-                    _Instance = GameObjectUtil.Instance.gameObject.GetOrAddComponent<RemoteUtil>();
+                    _Instance = DevTool.Instance.gameObject.GetOrAddComponent<RemoteTool>();
                 }
                 return _Instance;
             }

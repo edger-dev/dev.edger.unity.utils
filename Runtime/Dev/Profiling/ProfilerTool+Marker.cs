@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using UnityEngine.Profiling;
 using Unity.Profiling;
 
-namespace Edger.Unity.Profiling {
-    public partial class ProfilerUtil {
+namespace Edger.Unity.Dev.Profiling {
+    public partial class ProfilerTool {
         private static readonly Dictionary<string, ProfilerMarker> _Markers = new Dictionary<string, ProfilerMarker>();
 
         public static ProfilerMarker GetMarker(ProfilerCategory category, string name) {
