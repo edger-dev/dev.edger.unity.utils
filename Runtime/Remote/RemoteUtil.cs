@@ -40,7 +40,7 @@ namespace Edger.Unity.Remote {
     #endif
             if (_Server != null) {
                 Port = _Server.Port;
-                Error("Started UDP server on port: {0}", Port);
+                Info("Started UDP server on port: {0}", Port);
             }
         }
 
