@@ -3,6 +3,10 @@ using System.Collections;
 
 using UnityEngine;
 
+#if ODIN_INSPECTOR
+using Sirenix.OdinInspector;
+#endif
+
 namespace Edger.Unity {
     public class ReadOnlyFieldAttribute : PropertyAttribute {
     }
@@ -60,6 +64,10 @@ namespace Edger.Unity {
         }
 
         public virtual bool LogDebug { get { return DebugMode; } }
+
+#if ODIN_INSPECTOR
+        [ShowInInspector, ReadOnly, HideLabel, PropertyOrder(int.MaxValue)]
+#endif
         public virtual string LogPrefix { get { return string.Format("<{0}>[{1}] ", GetType().Name, gameObject.name); } }
 
         public void Critical(string format, params object[] values) {

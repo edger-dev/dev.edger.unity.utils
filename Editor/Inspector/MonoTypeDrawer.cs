@@ -10,8 +10,7 @@ using Edger.Unity;
 namespace Edger.Unity.Editor {
     [CustomPropertyDrawer(typeof(MonoTypeAttribute))]
     public class MonoTypeDrawer : ReadOnlyFieldDrawer {
-        public override float GetPropertyHeight(SerializedProperty property,
-                                                GUIContent label) {
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label) {
             return EditorGUI.GetPropertyHeight(property, label, true);
         }
 
