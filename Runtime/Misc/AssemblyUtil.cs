@@ -153,7 +153,8 @@ namespace Edger.Unity {
         }
 
         public static Assembly LoadAssembly(byte[] assemblyData) {
-            Assembly assembly = Assembly.Load(assemblyData);
+            // Assembly assembly = Assembly.Load(assemblyData);
+            Assembly assembly = AppDomain.CurrentDomain.Load(assemblyData);
             return assembly;
         }
 
