@@ -151,5 +151,19 @@ namespace Edger.Unity {
             Log.ErrorOrDebug(isDebug, "GetTargetType<{0}>() failed: Not Found: {1}", genericInterface.Name, type.FullName);
             return null;
         }
+
+        public static Assembly LoadAssembly(byte[] assemblyData) {
+            Assembly assembly = Assembly.Load(assemblyData);
+            return assembly;
+        }
+
+        public static List<Assembly> LoadAssemblies(List<byte[]> assembliesData) {
+            var result = new List<Assembly>();
+            foreach (var data in assembliesData) {
+                var assembly = LoadAssembly(data);
+                result.Append(assembly);
+            }
+            return result;
+        }
     }
 }
