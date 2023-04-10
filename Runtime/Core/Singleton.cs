@@ -23,6 +23,7 @@ namespace Edger.Unity {
             bool failed = false;
             if (instance == null) {
                 if (Singleton.AddInstance<T>(self)) {
+                    instance = self;
                     self.gameObject.name = CalcName<T>();
                     UnityEngine.Object.DontDestroyOnLoad(self.gameObject);
                 } else {
