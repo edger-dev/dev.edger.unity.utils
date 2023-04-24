@@ -19,23 +19,21 @@ namespace Edger.Unity {
             return instance;
         }
 
-        public static void SetupInstance<T>(ref T instance, T self) where T : Component, ISingleton {
-            bool failed = false;
+        public static bool SetupInstance<T>(ref T instance, T self) where T : Component, ISingleton {
+            bool added = false;
             if (instance == null) {
                 if (Singleton.AddInstance<T>(self)) {
+                    added = true;
                     instance = self;
                     self.gameObject.name = CalcName<T>();
                     UnityEngine.Object.DontDestroyOnLoad(self.gameObject);
-                } else {
-                    failed = true;
                 }
-            } else if (instance != self) {
-                failed = true;
             }
-            if (failed) {
+            if (instance != self) {
                 GameObjectUtil.Destroy(self.gameObject);
                 self.Critical("SetupInstance<{0}> failed: instance = {1}, self = {2}", typeof(T).FullName, instance, self);
             }
+            return added;
         }
 
         private static string CalcName<T>() {

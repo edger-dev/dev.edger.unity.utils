@@ -10,7 +10,8 @@ namespace Edger.Unity.Dev {
         public static DevTool Instance { get => Singleton.GetInstance(ref _Instance); }
 
         protected override void OnAwake() {
-            Singleton.SetupInstance(ref _Instance, this);
+            if (Singleton.SetupInstance(ref _Instance, this)) {
+            }
         }
     }
 }
